@@ -23,6 +23,6 @@ import { UserRepository } from "./repositories/user.repository";
     TypeOrmModule.forFeature([User, UserRepository]),
   ],
   providers: [UserRepository],
-  exports: [TypeOrmModule, UserRepository],
+  exports: [TypeOrmModule],
 })
 export class TypeormModule {}

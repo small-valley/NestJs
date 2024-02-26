@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { TypeormModule } from "../typeorm/typeorm.module";
+import { RepositoryModule } from "../repository/repository.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { DaysController } from "./days/days.controller";
@@ -8,7 +8,7 @@ import { DaysService } from "./days/days.service";
 
 @Module({
   imports: [
-    TypeormModule,
+    RepositoryModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

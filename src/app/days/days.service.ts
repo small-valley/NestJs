@@ -1,10 +1,10 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { UserRepository } from "../../typeorm/repositories/user.repository";
+import { IUserRepository } from "../../repository/interfaces/IUserRepository";
 
 @Injectable()
 export class DaysService {
-  @Inject(UserRepository)
-  private readonly userRepository: UserRepository;
+  @Inject("userRepository")
+  private readonly userRepository: IUserRepository;
 
   async getDaysWithSpots() {
     return await this.userRepository.findAll();
