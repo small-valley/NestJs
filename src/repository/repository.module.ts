@@ -1,16 +1,18 @@
 import { Module } from "@nestjs/common";
-import { UserRepository } from "../typeorm/repositories/user.repository";
+import { MongooseModule } from "../mongoose/mongoose.module";
+import { MongooseUserRepository } from "../mongoose/repositories/user.repository";
+import { UserRepository as TypeormUser } from "../typeorm/repositories/user.repository";
 import { TypeormModule } from "../typeorm/typeorm.module";
 
 @Module({
-  imports: [TypeormModule],
+  imports: [TypeormModule, MongooseModule],
   providers: [
     {
       provide: "userRepository",
       useClass:
-        process.env.NODE_ENV === "development"
-          ? UserRepository
-          : UserRepository,
+        process.env.DB_TYPE === "postgre"
+          ? TypeormUser
+          : MongooseUserRepository,
     },
   ],
   exports: ["userRepository"],
