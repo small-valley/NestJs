@@ -2,15 +2,15 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-  @Column()
+  @Column({ name: "first_name" })
   firstName: string;
 
-  @Column()
+  @Column({ name: "last_name" })
   lastName: string;
 
-  @Column({ default: true })
+  @Column({ name: "is_active", default: true })
   isActive: boolean;
 }

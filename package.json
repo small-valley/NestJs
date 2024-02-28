@@ -19,7 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migration:generate": "npm run typeorm-ts-node-commonjs -- -d src/typeorm/typeorm.ts migration:generate src/typeorm/migrations/",
-    "migration:run": "npm ts-node src/typeorm/createDatabase.ts && npm run typeorm-ts-node-commonjs -- -d src/typeorm/typeorm.ts migration:run",
+    "migration:run": "npx ts-node src/typeorm/createDatabase.ts && npm run typeorm-ts-node-commonjs -- migration:run -d src/typeorm/typeorm.ts",
     "sls:start": "serverless offline"
   },
   "dependencies": {
