@@ -1,5 +1,6 @@
 import serverlessExpress from "@codegenie/serverless-express";
 import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { Callback, Context, Handler } from "aws-lambda";
 import { config } from "dotenv";
 import "reflect-metadata";
@@ -32,6 +33,17 @@ export const handler: Handler = async (
 */
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Swagger configuration
+  const config = new DocumentBuilder()
+    .setTitle("example")
+    .setDescription("The API description")
+    .setVersion("1.0")
+    .addTag("example")
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("swagger", app, document);
+
   await app.listen(3000);
 }
 
