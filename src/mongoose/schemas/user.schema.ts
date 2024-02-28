@@ -8,13 +8,13 @@ export class User {
   @Prop()
   name: string;
 
-  @Prop()
+  @Prop({ name: "first_name" })
   firstName: string;
 
-  @Prop()
+  @Prop({ name: "last_name" })
   lastName: string;
 
-  @Prop({ default: true })
+  @Prop({ name: "is_acrive", default: true })
   isActive: boolean;
 }
 
