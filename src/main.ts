@@ -7,7 +7,7 @@ import "reflect-metadata";
 import { AppModule } from "./app/app.module";
 
 /*
-  serverless configuration
+  local serverless configuration
 */
 let server: Handler;
 
