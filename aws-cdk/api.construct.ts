@@ -13,7 +13,7 @@ export class ApiConstruct extends Construct {
       code: Code.fromAsset(
         resolve(__dirname, "../aws-cdk/dependencies/layer1/node_modules"),
       ),
-      compatibleRuntimes: [Runtime.NODEJS_18_X],
+      compatibleRuntimes: [Runtime.NODEJS_20_X],
       description: "Api Handler Dependencies 1",
     });
 
@@ -23,10 +23,16 @@ export class ApiConstruct extends Construct {
         exclude: ["node_modules"],
       }),
       handler: "lambda.api",
-      runtime: Runtime.NODEJS_18_X,
+      runtime: Runtime.NODEJS_20_X,
       layers: [lambdaLayer1],
       environment: {
         NODE_PATH: "$NODE_PATH:/opt",
+        DB_TYPE: "postgres",
+        POSTGRE_DATABASE_HOST: "",
+        POSTGRE_DATABASE_PORT: "5432",
+        POSTGRE_DATABASE_USER_NAME: "",
+        POSTGRE_DATABASE_PASSWORD: "",
+        POSTGRE_DATABASE_NAME: "",
       },
     });
 
@@ -53,7 +59,7 @@ export class ApiConstruct extends Construct {
     // });
 
     // Define resources and methods for the API Gateway
-    const resource = api.root.addResource("example");
-    resource.addMethod("GET", new LambdaIntegration(handler));
+    const days = api.root.addResource("days");
+    days.addMethod("GET", new LambdaIntegration(handler));
   }
 }
