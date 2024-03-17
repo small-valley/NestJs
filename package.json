@@ -33,7 +33,6 @@
     "@nestjs/typeorm": "^10.0.2",
     "aws-cdk-lib": "^2.131.0",
     "aws-lambda": "^1.0.7",
-    "aws-serverless-express": "^3.4.0",
     "constructs": "^10.3.0",
     "dotenv": "^16.4.5",
     "mongoose": "^8.2.0",
