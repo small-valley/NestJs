@@ -4,8 +4,8 @@ import { ApiConstruct } from "./api.construct";
 
 export class CdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id);
+    super(scope, id, props);
 
-    new ApiConstruct(this, "ApiConstruct");
+    new ApiConstruct(this, "ApiConstruct", props);
   }
 }
