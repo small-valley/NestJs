@@ -12,6 +12,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      TEST_VARIABLE: ${{ secrets.TEST_VARIABLE }}
 
     steps:
       - name: Checkout code
@@ -24,7 +25,7 @@ jobs:
 
       - name: Check secret
         run: |
-          print ${{ secrets.TEST_VARIABLE }}
+          print $TEST_VARIABLE
 
       - name: Install dependencies
         run: npm install
