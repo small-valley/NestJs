@@ -25,7 +25,8 @@ jobs:
 
       - name: Check secret
         run: |
-          print $TEST_VARIABLE
+          echo ${{ secrets.TEST_VARIABLE}}
+          echo $TEST_VARIABLE
 
       - name: Install dependencies
         run: npm install
