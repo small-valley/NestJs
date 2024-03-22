@@ -22,6 +22,10 @@ jobs:
         with:
           node-version: 20
 
+      - name: Check secret
+        run: |
+          print ${{ secrets.TEST_VARIABLE }}
+
       - name: Install dependencies
         run: npm install
 
