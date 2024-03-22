@@ -12,7 +12,6 @@ jobs:
     env:
       CDK_DEFAULT_ACCOUNT: ${{ secrets.CDK_DEFAULT_ACCOUNT }}
       CDK_DEFAULT_REGION: ${{ secrets.CDK_DEFAULT_REGION }}
-      TEST_VARIABLE: ${{ secrets.TEST_VARIABLE }}
 
     steps:
       - name: Checkout code
@@ -23,12 +22,10 @@ jobs:
         with:
           node-version: 20
 
-      - name: Check secret
-        run: |
-          echo ${{ secrets.TEST_VARIABLE}}
-
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          cd ./aws_cdk/dependencies/layer1 && npm install
 
       - name: Build Nest.js app
         run: npm run build
