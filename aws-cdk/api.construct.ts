@@ -44,11 +44,12 @@ export class ApiConstruct extends Construct {
         DB_TYPE: "postgres",
         POSTGRE_DATABASE_HOST: dbInstance.dbInstanceEndpointAddress,
         POSTGRE_DATABASE_PORT: dbInstance.dbInstanceEndpointPort,
-        POSTGRE_DATABASE_USER_NAME: "",
-        POSTGRE_DATABASE_PASSWORD: "",
-        POSTGRE_DATABASE_NAME: "",
+        POSTGRE_DATABASE_USER_NAME:
+          process.env.POSTGRE_DATABASE_USER_NAME || "",
+        POSTGRE_DATABASE_PASSWORD: process.env.POSTGRE_DATABASE_PASSWORD || "",
+        POSTGRE_DATABASE_NAME: process.env.POSTGRE_DATABASE_NAME || "",
       },
-      timeout: cdk.Duration.seconds(5),
+      timeout: cdk.Duration.seconds(10),
       memorySize: 128,
     });
 
