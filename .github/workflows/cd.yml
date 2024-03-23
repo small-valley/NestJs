@@ -12,6 +12,8 @@ jobs:
     env:
       CDK_DEFAULT_ACCOUNT: ${{ secrets.CDK_DEFAULT_ACCOUNT }}
       CDK_DEFAULT_REGION: ${{ secrets.CDK_DEFAULT_REGION }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
       - name: Checkout code
@@ -38,9 +40,9 @@ jobs:
 
       - name: Configure AWS credentials
         run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set region ${{ secrets.AWS_REGION }}
+          aws configure set aws_access_key_id $env:AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $env:AWS_ACCESS_KEY_ID
+          aws configure set region $env:CDK_DEFAULT_REGION
 
       - name: Deploy with CDK
         run: |
