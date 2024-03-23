@@ -44,10 +44,19 @@ jobs:
           aws configure set aws_secret_access_key $AWS_ACCESS_KEY_ID
           aws configure set region $CDK_DEFAULT_REGION
 
+      - name: Set up AWS credentials
+        run: |
+          mkdir -p ~/.aws
+          echo "[default]" > ~/.aws/config
+          echo "region = $CDK_DEFAULT_REGION" >> ~/.aws/config
+          echo "[default]" > ~/.aws/credentials
+          echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+          echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+
       - name: Deploy with CDK
         run: |
           npm install -g aws-cdk@2.130.0
-          cdk deploy CdkStack --require-approval never
+          cdk deploy --require-approval never
 
       - name: Clean up
         run: |
