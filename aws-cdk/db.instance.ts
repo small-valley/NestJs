@@ -32,8 +32,10 @@ export const db = (scope: Construct, vpc: ec2.IVpc) => {
       "rds.force_ssl": "0",
     },
     credentials: {
-      username: "",
-      password: cdk.SecretValue.unsafePlainText(""),
+      username: process.env.POSTGRES_USER || "",
+      password: cdk.SecretValue.unsafePlainText(
+        process.env.POSTGRES_PASSWORD || "",
+      ),
     },
   });
 
