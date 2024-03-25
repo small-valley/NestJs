@@ -18,8 +18,6 @@ import { UserRepository } from "./repositories/user.repository";
         database: configService.get<string>("POSTGRE_DATABASE_NAME"),
         entities: [User],
         synchronize: false,
-        migrations: [`${__dirname}/migrations/*.js`],
-        migrationsRun: true,
       }),
     }),
     TypeOrmModule.forFeature([User, UserRepository]),
