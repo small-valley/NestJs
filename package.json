@@ -20,10 +20,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
     "db:create": "npx ts-node src/typeorm/scripts/createDatabase.ts",
-    "migration:generate": "npm run typeorm -- -d src/typeorm/typeorm.ts migration:generate src/typeorm/migrations/migration",
+    "migration:generate": "npm run typeorm -- -d src/typeorm/typeorm.ts migration:generate src/typeorm/migrations/migration --check",
     "migration:run": "npm run typeorm -- -d src/typeorm/typeorm.ts migration:run",
     "db:drop": "npx ts-node src/typeorm/scripts/dropDatabase.ts",
     "db:reset": "npm run db:drop && npm run db:create && npm run migration:generate && npm run migration:run",
+    "db:migration": "npm run migration:generate && npm run migration:run",
     "sls:start": "serverless offline"
   },
   "dependencies": {
