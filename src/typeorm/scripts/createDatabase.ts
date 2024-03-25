@@ -10,18 +10,12 @@ const DB_PASSWORD: string = process.env.POSTGRE_DATABASE_PASSWORD || "";
 const DB_PORT: number = parseInt(process.env.POSTGRE_DATABASE_PORT) || 5432;
 
 async function setupDatabase() {
-  const isDev = process.env.NODE_ENV === "development";
-
-  if (!isDev)
-    return console.log(
-      "in production environment - skipping database creation.",
-    );
-
   const client = new Client({
     host: DB_HOST,
     user: DB_USER,
     password: DB_PASSWORD,
     port: DB_PORT,
+    name: "postgres",
   });
 
   await client.connect();
