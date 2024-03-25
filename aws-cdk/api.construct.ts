@@ -82,5 +82,37 @@ export class ApiConstruct extends Construct {
     // Define resources and methods for the API Gateway
     const days = api.root.addResource("days");
     days.addMethod("GET", new LambdaIntegration(handler));
+
+    const migrationHandler = new Function(this, "MigrationHandler", {
+      code: Code.fromAsset(resolve(__dirname, "../dist"), {
+        exclude: ["node_modules"],
+      }),
+      vpc: vpcInstance,
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PUBLIC,
+      },
+      allowPublicSubnet: true,
+      handler: "lambda-migration.handler",
+      runtime: Runtime.NODEJS_20_X,
+      layers: [lambdaLayer1],
+      environment: {
+        NODE_PATH: "$NODE_PATH:/opt",
+        DB_TYPE: "postgres",
+        POSTGRE_DATABASE_HOST: dbInstance.dbInstanceEndpointAddress,
+        POSTGRE_DATABASE_PORT: dbInstance.dbInstanceEndpointPort,
+        POSTGRE_DATABASE_USER_NAME:
+          process.env.POSTGRE_DATABASE_USER_NAME || "",
+        POSTGRE_DATABASE_PASSWORD: process.env.POSTGRE_DATABASE_PASSWORD || "",
+        POSTGRE_DATABASE_NAME: process.env.POSTGRE_DATABASE_NAME || "",
+      },
+      timeout: cdk.Duration.seconds(10),
+      memorySize: 128,
+    });
+
+    dbInstance.connections.allowFrom(
+      migrationHandler,
+      ec2.Port.tcp(5432),
+      "Allow inbound from Lambda",
+    );
   }
 }
