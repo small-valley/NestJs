@@ -48,7 +48,7 @@ jobs:
           eval `ssh-agent -s`
           ssh-add - <<< "$BASTION_SSH_KEY"
           ssh -fN -v -L 5432:$DATABASE_HOST:5432 $BASTION_USER@$BASTION_IP
-          npm run db:reset
+          npm run db:migration
 
       - name: Install AWS CLI
         run: |
