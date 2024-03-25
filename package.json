@@ -23,7 +23,7 @@
     "migration:generate": "npm run typeorm -- -d src/typeorm/typeorm.ts migration:generate src/typeorm/migrations/migration",
     "migration:run": "npm run typeorm -- -d src/typeorm/typeorm.ts migration:run",
     "db:drop": "npx ts-node src/typeorm/scripts/dropDatabase.ts",
-    "db:reset": "npm run migration:generate && npm run migration:run",
+    "db:reset": "npm run db:drop && npm run db:create && npm run migration:generate && npm run migration:run",
     "sls:start": "serverless offline"
   },
   "dependencies": {
