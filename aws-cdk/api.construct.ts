@@ -4,7 +4,6 @@ import * as ec2 from "aws-cdk-lib/aws-ec2";
 import { Code, Function, LayerVersion, Runtime } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import { resolve } from "path";
-import { db } from "./db.instance";
 import { vpc } from "./vpc.instance";
 
 export class ApiConstruct extends Construct {
@@ -15,7 +14,7 @@ export class ApiConstruct extends Construct {
     const vpcInstance = vpc(this);
 
     // Create an RDS instance
-    const dbInstance = db(this, vpcInstance);
+    // const dbInstance = db(this, vpcInstance);
 
     // pack all external deps in layer
     const lambdaLayer1 = new LayerVersion(this, "HandlerLayer1", {
@@ -42,8 +41,8 @@ export class ApiConstruct extends Construct {
       environment: {
         NODE_PATH: "$NODE_PATH:/opt",
         DB_TYPE: "postgres",
-        POSTGRE_DATABASE_HOST: dbInstance.dbInstanceEndpointAddress,
-        POSTGRE_DATABASE_PORT: dbInstance.dbInstanceEndpointPort,
+        POSTGRE_DATABASE_HOST: "", //dbInstance.dbInstanceEndpointAddress,
+        POSTGRE_DATABASE_PORT: "5432", //dbInstance.dbInstanceEndpointPort,
         POSTGRE_DATABASE_USER_NAME:
           process.env.POSTGRE_DATABASE_USER_NAME || "",
         POSTGRE_DATABASE_PASSWORD: process.env.POSTGRE_DATABASE_PASSWORD || "",
@@ -54,11 +53,11 @@ export class ApiConstruct extends Construct {
     });
 
     // Update RDS security group to allow inbound traffic from Lambda
-    dbInstance.connections.allowFrom(
-      handler,
-      ec2.Port.tcp(5432),
-      "Allow inbound from Lambda",
-    );
+    // dbInstance.connections.allowFrom(
+    //   handler,
+    //   ec2.Port.tcp(5432),
+    //   "Allow inbound from Lambda",
+    // );
 
     // add api resource to handle all http traffic and pass it to our handler
     const api = new RestApi(this, "Api", {
